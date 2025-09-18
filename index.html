@@ -67,7 +67,7 @@
     const backlog = document.getElementById('backlog');
     const clearBtn = document.getElementById('clearBtn');
 
-    // Добавить задачу в Бэклог
+    
     addBtn.addEventListener('click', () => {
       if (taskInput.value.trim() !== "") {
         const task = document.createElement('div');
@@ -78,12 +78,12 @@
       }
     });
 
-    // Очистить корзину
+
     clearBtn.addEventListener('click', () => {
       document.getElementById('trash').innerHTML = "";
     });
 
-    // Добавление задачи по нажатию Enter
+    
     taskInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
         addBtn.click();
