@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список задач - Отдельные файлы</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-tasks"></i> Список задач</h1>
+            <p>Отдельные файлы HTML и CSS</p>
+        </header>
+        
+        <div class="new-task">
+            <input type="text" placeholder="Новая задача...">
+            <button><i class="fas fa-plus"></i> Добавить</button>
+        </div>
+        
+        <div class="columns">
+            <div class="column backlog">
+                <h2><i class="fas fa-inbox"></i> Бэклог</h2>
+                <ul class="task-list">
+                    <li>Изучить HTML и CSS <button class="delete-btn">×</button></li>
+                    <li>Создать макет страницы <button class="delete-btn">×</button></li>
+                    <li>Реализовать Todo-лист <button class="delete-btn">×</button></li>
+                </ul>
+            </div>
+            
+            <div class="column in-progress">
+                <h2><i class="fas fa-spinner"></i> В процессе</h2>
+                <ul class="task-list">
+                    <li>Изучить JavaScript <button class="delete-btn">×</button></li>
+                    <li>Изучить Flexbox <button class="delete-btn">×</button></li>
+                </ul>
+            </div>
+            
+            <div class="column done">
+                <h2><i class="fas fa-check-circle"></i> Готово</h2>
+                <ul class="task-list">
+                    <li>Позвонить маме <button class="delete-btn">×</button></li>
+                    <li>Погладить кота <button class="delete-btn">×</button></li>
+                </ul>
+            </div>
+            
+            <div class="column trash">
+                <h2><i class="fas fa-trash"></i> Корзина</h2>
+                <ul class="task-list">
+                    <li>Сходить погулять <button class="delete-btn">×</button></li>
+                    <li>Прочитать Войну и Мир <button class="delete-btn">×</button></li>
+                </ul>
+                <button class="clear-btn"><i class="fas fa-broom"></i> Очистить</button>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-value">9</div>
+                <div class="stat-label">Всего задач</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">5</div>
+                <div class="stat-label">В процессе</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">2</div>
+                <div class="stat-label">Выполнено</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">2</div>
+                <div class="stat-label">В корзине</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const addTaskButton = document.querySelector('.new-task button');
+            const addTaskInput = document.querySelector('.new-task input');
+            const clearBtn = document.querySelector('.clear-btn');
+            
+            // Добавление новой задачи
+            addTaskButton.addEventListener('click', function() {
+                if (addTaskInput.value.trim() !== '') {
+                    const backlogList = document.querySelector('.backlog .task-list');
+                    const newTask = document.createElement('li');
+                    newTask.innerHTML = `
+                        ${addTaskInput.value}
+                        <button class="delete-btn">×</button>
+                    `;
+                    backlogList.appendChild(newTask);
+                    addTaskInput.value = '';
+                    
+                    // Добавляем обработчик для новой кнопки удаления
+                    newTask.querySelector('.delete-btn').addEventListener('click', function() {
+                        const trashList = document.querySelector('.trash .task-list');
+                        trashList.appendChild(newTask);
+                        updateStats();
+                    });
+                    
+                    updateStats();
+                }
+            });
+            
+            // Добавление задачи по нажатию Enter
+            addTaskInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addTaskButton.click();
+                }
+            });
+            
+            // Очистка корзины
+            clearBtn.addEventListener('click', function() {
+                const trashList = document.querySelector('.trash .task-list');
+                if (trashList.children.length > 0) {
+                    if (confirm('Вы уверены, что хотите очистить корзину?')) {
+                        trashList.innerHTML = '';
+                        updateStats();
+                    }
+                }
+            });
+            
+            // Добавляем обработчики для существующих кнопок удаления
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const task = this.parentElement;
+                    const trashList = document.querySelector('.trash .task-list');
+                    trashList.appendChild(task);
+                    updateStats();
+                });
+            });
+            
+            // Функция обновления статистики
+            function updateStats() {
+                const totalTasks = document.querySelectorAll('.task-list li').length;
+                const inProgressTasks = document.querySelectorAll('.in-progress .task-list li').length;
+                const doneTasks = document.querySelectorAll('.done .task-list li').length;
+                const trashTasks = document.querySelectorAll('.trash .task-list li').length;
+                
+                document.querySelectorAll('.stat-value')[0].textContent = totalTasks;
+                document.querySelectorAll('.stat-value')[1].textContent = inProgressTasks;
+                document.querySelectorAll('.stat-value')[2].textContent = doneTasks;
+                document.querySelectorAll('.stat-value')[3].textContent = trashTasks;
+            }
+            
+            // Инициализация статистики
+            updateStats();
+        });
+    </script>
+</body>
+</html>

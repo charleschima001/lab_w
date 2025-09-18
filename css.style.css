@@ -1,0 +1,274 @@
+/* === a. ОБЩИЙ СТИЛЬ ДЛЯ ВСЕГО ДОКУМЕНТА === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: #333;
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    margin: 20px;
+}
+
+header {
+    background: #4a6fc7;
+    color: white;
+    padding: 25px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+/* === b. СТИЛЬ ДЛЯ ДОБАВЛЕНИЯ ЗАДАЧИ === */
+.new-task {
+    background: #f0f5ff;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.new-task input {
+    flex: 1;
+    padding: 15px 20px;
+    border: 2px solid #b5c8f5;
+    border-radius: 8px;
+    font-size: 18px;
+    margin-right: 15px;
+    transition: border-color 0.3s;
+}
+
+.new-task input:focus {
+    border-color: #4a6fc7;
+    outline: none;
+}
+
+.new-task button {
+    background: #4a6fc7;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background 0.3s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.new-task button:hover {
+    background: #3a5bb0;
+    transform: translateY(-2px);
+}
+
+/* === d. СТИЛЬ ДЛЯ ОБЛАСТИ С ЗАДАЧАМИ === */
+.columns {
+    display: flex;
+    min-height: 450px;
+}
+
+.column {
+    flex: 1;
+    padding: 25px;
+    border-right: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+}
+
+.column:last-child {
+    border-right: none;
+}
+
+.column h2 {
+    color: #4a6fc7;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #eee;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.backlog {
+    background: #fafbff;
+}
+
+.in-progress {
+    background: #f5f9ff;
+}
+
+.done {
+    background: #f0f8ff;
+}
+
+.trash {
+    background: #fff5f5;
+}
+
+.task-list {
+    flex: 1;
+    list-style-type: none;
+    min-height: 300px;
+}
+
+/* === c. СТИЛЬ ДЛЯ ЗАДАЧИ === */
+.task-list li {
+    background: white;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    border-left: 5px solid #4a6fc7;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s;
+}
+
+.task-list li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+}
+
+.backlog .task-list li {
+    border-left-color: #4a6fc7;
+}
+
+.in-progress .task-list li {
+    border-left-color: #ff9800;
+}
+
+.done .task-list li {
+    border-left-color: #4caf50;
+}
+
+.trash .task-list li {
+    border-left-color: #f44336;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 0 5px;
+    transition: color 0.2s;
+}
+
+.delete-btn:hover {
+    color: #f44336;
+}
+
+/* === e. СТИЛЬ ДЛЯ КНОПКИ ОЧИСТИТЬ === */
+.clear-btn {
+    background: #f44336;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 16px;
+    align-self: flex-start;
+    transition: background 0.3s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.clear-btn:hover {
+    background: #d32f2f;
+    transform: translateY(-2px);
+}
+
+/* === АДАПТИВНЫЙ ДИЗАЙН === */
+@media (max-width: 900px) {
+    .columns {
+        flex-wrap: wrap;
+    }
+    
+    .column {
+        flex: 1 0 50%;
+        border-right: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .column:nth-child(2n) {
+        border-right: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .column {
+        flex: 1 0 100%;
+        border-right: none;
+    }
+    
+    .new-task {
+        flex-direction: column;
+    }
+    
+    .new-task input {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    
+    .new-task button {
+        width: 100%;
+    }
+    
+    h1 {
+        font-size: 28px;
+    }
+}
+
+/* Статистика */
+.stats {
+    background: #f8f9ff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    border-top: 1px solid #eee;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 15px;
+    min-width: 120px;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: bold;
+    color: #4a6fc7;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}
