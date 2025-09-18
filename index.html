@@ -1,166 +1,94 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Чима чуквуемека - Список задач</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Чима чуквуемека</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Main container for the entire app -->
-    <div class="container">
-        <!-- App header with title -->
-        <header>
-            <h1>Список задач</h1>
-            <div class="author">Чима чуквуемека</div>
-        </header>
-        
-        <!-- Section for adding new tasks -->
-        <div class="new-task">
-            <input type="text" placeholder="Название задачи...">
-            <button>Добавить</button>
-        </div>
-        
-        <!-- Container for all task columns -->
-        <div class="columns">
-            <!-- Backlog column -->
-            <div class="column backlog">
-                <h2>Бэклог</h2>
-                <ul class="task-list">
-                    <li>Выучить JS <button class="delete-btn">×</button></li>
-                    <li>Выучить React <button class="delete-btn">×</button></li>
-                    <li>Сделать домашку <button class="delete-btn">×</button></li>
-                </ul>
-            </div>
-            
-            <!-- In Progress column -->
-            <div class="column in-progress">
-                <h2>В процессе</h2>
-                <ul class="task-list">
-                    <li>Выпить скуки <button class="delete-btn">×</button></li>
-                    <li>Попить воды <button class="delete-btn">×</button></li>
-                </ul>
-            </div>
-            
-            <!-- Done column -->
-            <div class="column done">
-                <h2>Готово</h2>
-                <ul class="task-list">
-                    <li>Позвонить маме <button class="delete-btn">×</button></li>
-                    <li>Погладить кота <button class="delete-btn">×</button></li>
-                </ul>
-            </div>
-            
-            <!-- Trash column -->
-            <div class="column trash">
-                <h2>Корзина</h2>
-                <ul class="task-list">
-                    <li>Сходить погулять <button class="delete-btn">×</button></li>
-                    <li>Прочитать Войну и Мир <button class="delete-btn">×</button></li>
-                </ul>
-                <button class="clear-btn">× Очистить</button>
-            </div>
-        </div>
+  <div class="header-container">
+    <header>
+      <h1>Список задач</h1>
+    </header>
+  </div>
+
+  <div class="main-content">
+    <div class="new-task-container">
+      <h3>Новая задача</h3>
+      <div class="input-group">
+        <input type="text" id="taskInput" placeholder="Название задачи...">
+        <button id="addBtn">+ Добавить</button>
+      </div>
     </div>
 
-    <script>
-        // JavaScript code remains the same
-        class TodoApp {
-            constructor() {
-                this.tasks = [
-                    { id: 1, text: "Выучить JS", status: "backlog" },
-                    { id: 2, text: "Выучить React", status: "backlog" },
-                    { id: 3, text: "Сделать домашку", status: "backlog" },
-                    { id: 4, text: "Выпить скуки", status: "in-progress" },
-                    { id: 5, text: "Попить воды", status: "in-progress" },
-                    { id: 6, text: "Позвонить маме", status: "done" },
-                    { id: 7, text: "Погладить кота", status: "done" },
-                    { id: 8, text: "Сходить погулять", status: "trash" },
-                    { id: 9, text: "Прочитать Войну и Мир", status: "trash" }
-                ];
-                
-                this.nextId = 10;
-                this.init();
-            }
-            
-            init() {
-                this.renderTasks();
-                this.setupEventListeners();
-            }
-            
-            renderTasks() {
-                document.querySelectorAll('.task-list').forEach(list => {
-                    list.innerHTML = '';
-                });
-                
-                this.tasks.forEach(task => {
-                    const list = document.querySelector(`.${task.status} .task-list`);
-                    if (list) {
-                        const li = document.createElement('li');
-                        li.textContent = task.text;
-                        
-                        const deleteBtn = document.createElement('button');
-                        deleteBtn.className = 'delete-btn';
-                        deleteBtn.textContent = '×';
-                        deleteBtn.addEventListener('click', () => this.deleteTask(task.id));
-                        
-                        li.appendChild(deleteBtn);
-                        list.appendChild(li);
-                    }
-                });
-            }
-            
-            setupEventListeners() {
-                document.querySelector('.new-task button').addEventListener('click', () => {
-                    this.addTask();
-                });
-                
-                document.querySelector('.new-task input').addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        this.addTask();
-                    }
-                });
-                
-                document.querySelector('.clear-btn').addEventListener('click', () => {
-                    this.clearTrash();
-                });
-            }
-            
-            addTask() {
-                const input = document.querySelector('.new-task input');
-                const text = input.value.trim();
-                
-                if (text) {
-                    const newTask = {
-                        id: this.nextId++,
-                        text: text,
-                        status: 'backlog'
-                    };
-                    
-                    this.tasks.push(newTask);
-                    this.renderTasks();
-                    input.value = '';
-                }
-            }
-            
-            deleteTask(id) {
-                const taskIndex = this.tasks.findIndex(task => task.id === id);
-                
-                if (taskIndex !== -1) {
-                    this.tasks[taskIndex].status = 'trash';
-                    this.renderTasks();
-                }
-            }
-            
-            clearTrash() {
-                this.tasks = this.tasks.filter(task => task.status !== 'trash');
-                this.renderTasks();
-            }
-        }
+    <div class="columns-container">
+      <div class="columns">
+        <div class="column backlog">
+          <div class="column-header">Бэклог</div>
+          <div class="task-list" id="backlog">
+            <div class="task">Выучить JS</div>
+            <div class="task">Выучить React</div>
+            <div class="task">Сделать домашку</div>
+          </div>
+        </div>
 
-        document.addEventListener('DOMContentLoaded', () => {
-            new TodoApp();
-        });
-    </script>
+        <div class="column in-progress">
+          <div class="column-header">В процессе</div>
+          <div class="task-list" id="inProgress">
+            <div class="task">Выпить смузи</div>
+            <div class="task">Попить воды</div>
+          </div>
+        </div>
+
+        <div class="column done">
+          <div class="column-header">Готово</div>
+          <div class="task-list" id="done">
+            <div class="task">Позвонить маме</div>
+            <div class="task">Погладить кота</div>
+          </div>
+        </div>
+
+        <div class="column trash">
+          <div class="column-header">Корзина</div>
+          <div class="task-list" id="trash">
+            <div class="task">Сходить погулять</div>
+            <div class="task">Прочитать Войну и Мир</div>
+          </div>
+          <button id="clearBtn">× Очистить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const taskInput = document.getElementById('taskInput');
+    const addBtn = document.getElementById('addBtn');
+    const backlog = document.getElementById('backlog');
+    const clearBtn = document.getElementById('clearBtn');
+
+    // Добавить задачу в Бэклог
+    addBtn.addEventListener('click', () => {
+      if (taskInput.value.trim() !== "") {
+        const task = document.createElement('div');
+        task.className = 'task';
+        task.textContent = taskInput.value;
+        backlog.appendChild(task);
+        taskInput.value = "";
+      }
+    });
+
+    // Очистить корзину
+    clearBtn.addEventListener('click', () => {
+      document.getElementById('trash').innerHTML = "";
+    });
+
+    // Добавление задачи по нажатию Enter
+    taskInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        addBtn.click();
+      }
+    });
+  </script>
 </body>
 </html>
