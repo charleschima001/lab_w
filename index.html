@@ -1,94 +1,20 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Чима чуквуемека</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="header-container">
-    <header>
-      <h1>Список задач</h1>
-    </header>
-  </div>
+    <section class="app">
+        <header></header>
+        <main>
+            <section class="form-container"></section>
+            <section class="task-board"></section>
+        </main>
+    </section>
 
-  <div class="main-content">
-    <div class="new-task-container">
-      <h3>Новая задача</h3>
-      <div class="input-group">
-        <input type="text" id="taskInput" placeholder="Название задачи...">
-        <button id="addBtn">+ Добавить</button>
-      </div>
-    </div>
-
-    <div class="columns-container">
-      <div class="columns">
-        <div class="column backlog">
-          <div class="column-header">Бэклог</div>
-          <div class="task-list" id="backlog">
-            <div class="task">Выучить JS</div>
-            <div class="task">Выучить React</div>
-            <div class="task">Сделать домашку</div>
-          </div>
-        </div>
-
-        <div class="column in-progress">
-          <div class="column-header">В процессе</div>
-          <div class="task-list" id="inProgress">
-            <div class="task">Выпить смузи</div>
-            <div class="task">Попить воды</div>
-          </div>
-        </div>
-
-        <div class="column done">
-          <div class="column-header">Готово</div>
-          <div class="task-list" id="done">
-            <div class="task">Позвонить маме</div>
-            <div class="task">Погладить кота</div>
-          </div>
-        </div>
-
-        <div class="column trash">
-          <div class="column-header">Корзина</div>
-          <div class="task-list" id="trash">
-            <div class="task">Сходить погулять</div>
-            <div class="task">Прочитать Войну и Мир</div>
-          </div>
-          <button id="clearBtn">× Очистить</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const taskInput = document.getElementById('taskInput');
-    const addBtn = document.getElementById('addBtn');
-    const backlog = document.getElementById('backlog');
-    const clearBtn = document.getElementById('clearBtn');
-
-    
-    addBtn.addEventListener('click', () => {
-      if (taskInput.value.trim() !== "") {
-        const task = document.createElement('div');
-        task.className = 'task';
-        task.textContent = taskInput.value;
-        backlog.appendChild(task);
-        taskInput.value = "";
-      }
-    });
-
-
-    clearBtn.addEventListener('click', () => {
-      document.getElementById('trash').innerHTML = "";
-    });
-
-    
-    taskInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        addBtn.click();
-      }
-    });
-  </script>
+    <script type="module" src="src/main.js"></script>
 </body>
 </html>
