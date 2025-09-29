@@ -24,21 +24,20 @@ body {
     margin: 0 auto;
 }
 
-/* Add spacing between containers */
 .header-container {
     display: flex;
     justify-content: flex-start;
-    margin-bottom: 20px; /* Space below header */
+    margin-bottom: 20px; 
 }
 
 .form-container {
     align-self: flex-start;
-    margin-bottom: 30px; /* Space below form */
+    margin-bottom: 30px; 
 }
 
 .task-board {
     width: 100%;
-    margin-top: 10px; /* Space above task board */
+    margin-top: 10px; 
 }
 
 header {
@@ -145,13 +144,12 @@ header h1 {
     width: 100%;
 }
 
-/* Task status styles */
+
 .task--backlog { border-left: 4px solid #e6e9ee; }
 .task--processing { border-left: 4px solid #1976d2; }
 .task--done { border-left: 4px solid #4caf50; }
 .task--basket { border-left: 4px solid #f44336; }
 
-/* Clear basket button */
 .clear-basket-btn {
     margin-top: 15px;
     padding: 10px 16px;
@@ -168,7 +166,7 @@ header h1 {
     background: #d32f2f;
 }
 
-/* Column header colors based on status */
+
 .processing .column-header {
     background: #1976d2;
     color: white;
