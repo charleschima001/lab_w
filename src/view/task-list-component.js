@@ -1,10 +1,10 @@
 import { createElement } from "../framework/render.js";
 
-function createTaskListComponentTemplate() {
+function createTaskListComponentTemplate(status, statusLabel) {
     return `
-        <div class="column backlog">
-            <div class="column-header">Бэклог</div>
-            <div class="task-list" id="backlog">
+        <div class="column ${status}">
+            <div class="column-header">${statusLabel}</div>
+            <div class="task-list" data-status="${status}">
                 <!-- Tasks will be inserted here -->
             </div>
         </div>
@@ -12,8 +12,13 @@ function createTaskListComponentTemplate() {
 }
 
 export default class TaskListComponent {
+    constructor({ status, statusLabel }) {
+        this.status = status;
+        this.statusLabel = statusLabel;
+    }
+
     getTemplate() {
-        return createTaskListComponentTemplate();
+        return createTaskListComponentTemplate(this.status, this.statusLabel);
     }
 
     getElement() {
@@ -25,5 +30,9 @@ export default class TaskListComponent {
 
     removeElement() {
         this.element = null;
+    }
+
+    getTaskListElement() {
+        return this.getElement().querySelector('.task-list');
     }
 }

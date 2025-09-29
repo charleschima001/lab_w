@@ -25,4 +25,8 @@ export default class TaskBoardComponent {
     removeElement() {
         this.element = null;
     }
+
+    getColumnsContainer() {
+        return this.getElement().querySelector('.columns');
+    }
 }

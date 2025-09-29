@@ -1,3 +1,5 @@
+console.log('FormAddTaskComponent loading...');
+
 import { createElement } from "../framework/render.js";
 
 function createFormAddTaskComponentTemplate() {

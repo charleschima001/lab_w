@@ -1,21 +1,16 @@
 import { createElement } from "../framework/render.js";
 
-function createTaskComponentTemplate(task) {
-    const { title, status } = task;
+function createClearBasketButtonTemplate() {
     return `
-        <div class="task task--${status}">
-            ${title}
-        </div>
+        <button class="clear-basket-btn">
+            Очистить корзину
+        </button>
     `;
 }
 
-export default class TaskComponent {
-    constructor({ task }) {
-        this.task = task;
-    }
-
+export default class ClearBasketButtonComponent {
     getTemplate() {
-        return createTaskComponentTemplate(this.task);
+        return createClearBasketButtonTemplate();
     }
 
     getElement() {
