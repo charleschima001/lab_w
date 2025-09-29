@@ -4,20 +4,42 @@ import TasksBoardPresenter from './presenter/tasks-board-presenter.js';
 import { render, RenderPosition } from './framework/render.js';
 import TasksModel from './model/tasks-model.js';
 
-const bodyContainer = document.querySelector('.app');
-const headerContainer = document.querySelector('.header-container'); // Get the header container
+// Make sure these selectors match your HTML exactly
+const appContainer = document.querySelector('.app');
+const headerContainer = document.querySelector('.header-container');
 const formContainer = document.querySelector('.form-container');
-const tasksBoardContainer = document.querySelector('.task-board');
+const taskBoardContainer = document.querySelector('.task-board');
+
+console.log('Containers found:', {
+    appContainer: !!appContainer,
+    headerContainer: !!headerContainer,
+    formContainer: !!formContainer,
+    taskBoardContainer: !!taskBoardContainer
+});
 
 const tasksModel = new TasksModel();
 const tasksBoardPresenter = new TasksBoardPresenter({
-    boardContainer: tasksBoardContainer,
+    boardContainer: taskBoardContainer,
     tasksModel,
 });
 
-// Render header directly into the header-container div
-render(new HeaderComponent(), headerContainer);
+// Render header into the header container
+if (headerContainer) {
+    render(new HeaderComponent(), headerContainer);
+} else {
+    console.error('Header container not found!');
+}
 
-render(new FormAddTaskComponent(), formContainer);
+// Render form into the form container
+if (formContainer) {
+    render(new FormAddTaskComponent(), formContainer);
+} else {
+    console.error('Form container not found!');
+}
 
-tasksBoardPresenter.init();
+// Initialize task board
+if (taskBoardContainer) {
+    tasksBoardPresenter.init();
+} else {
+    console.error('Task board container not found!');
+}
