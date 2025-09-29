@@ -4,7 +4,7 @@ import TasksBoardPresenter from './presenter/tasks-board-presenter.js';
 import { render, RenderPosition } from './framework/render.js';
 import TasksModel from './model/tasks-model.js';
 
-// Make sure these selectors match your HTML exactly
+
 const appContainer = document.querySelector('.app');
 const headerContainer = document.querySelector('.header-container');
 const formContainer = document.querySelector('.form-container');
@@ -23,21 +23,18 @@ const tasksBoardPresenter = new TasksBoardPresenter({
     tasksModel,
 });
 
-// Render header into the header container
 if (headerContainer) {
     render(new HeaderComponent(), headerContainer);
 } else {
     console.error('Header container not found!');
 }
 
-// Render form into the form container
 if (formContainer) {
     render(new FormAddTaskComponent(), formContainer);
 } else {
     console.error('Form container not found!');
 }
 
-// Initialize task board
 if (taskBoardContainer) {
     tasksBoardPresenter.init();
 } else {
