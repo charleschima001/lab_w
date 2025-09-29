@@ -23,7 +23,7 @@ export default class TasksBoardPresenter {
         
         const columnsContainer = this.#tasksBoardComponent.getColumnsContainer();
         
-        // Create lists for all four statuses
+        
         const statuses = [Status.BACKLOG, Status.PROCESSING, Status.DONE, Status.BASKET];
         
         statuses.forEach(status => {
@@ -34,16 +34,16 @@ export default class TasksBoardPresenter {
             
             render(taskListComponent, columnsContainer);
             
-            // Get tasks for this specific status
+            
             const tasksForStatus = this.#tasksModel.getTasksByStatus(status);
             
-            // Render each task in the appropriate list
+            
             tasksForStatus.forEach(task => {
                 const taskComponent = new TaskComponent({ task });
                 render(taskComponent, taskListComponent.getTaskListElement());
             });
 
-            // Add clear basket button only for basket column
+            
             if (status === Status.BASKET) {
                 const clearBasketButton = new ClearBasketButtonComponent();
                 render(clearBasketButton, taskListComponent.getElement());
