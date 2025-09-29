@@ -12,6 +12,11 @@ function createElement(template) {
 }
 
 function render(component, container, place = RenderPosition.BEFOREEND) {
+    if (!container) {
+        console.error('Cannot render: container is null', component, container);
+        return;
+    }
+    
     const element = component.getElement();
     if (element && container) {
         container.insertAdjacentElement(place, element);
