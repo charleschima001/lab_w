@@ -1,9 +1,9 @@
-import { createElement } from "../framework/render.js";
+import { AbstractComponent } from "../framework/view/abstract-component.js";
 
-function createTaskListComponentTemplate(status, statusLabel) {
+function createTaskListComponentTemplate(status, label) {
     return `
         <div class="column ${status}">
-            <div class="column-header">${statusLabel}</div>
+            <div class="column-header">${label}</div>
             <div class="task-list" data-status="${status}">
                 <!-- Tasks will be inserted here -->
             </div>
@@ -11,28 +11,21 @@ function createTaskListComponentTemplate(status, statusLabel) {
     `;
 }
 
-export default class TaskListComponent {
-    constructor({ status, statusLabel }) {
-        this.status = status;
-        this.statusLabel = statusLabel;
+export default class TaskListComponent extends AbstractComponent {
+    #status = null;
+    #label = null;
+
+    constructor({ status, label }) {
+        super();
+        this.#status = status;
+        this.#label = label;
     }
 
-    getTemplate() {
-        return createTaskListComponentTemplate(this.status, this.statusLabel);
-    }
-
-    getElement() {
-        if (!this.element) {
-            this.element = createElement(this.getTemplate());
-        }
-        return this.element;
-    }
-
-    removeElement() {
-        this.element = null;
+    get template() {
+        return createTaskListComponentTemplate(this.#status, this.#label);
     }
 
     getTaskListElement() {
-        return this.getElement().querySelector('.task-list');
+        return this.element.querySelector('.task-list');
     }
 }
