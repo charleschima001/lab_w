@@ -39,24 +39,24 @@ export const tasks = [
         title: "Настроить маршрутизацию в React",
         status: "done",
     },
-    {
-        id: "9",
-        title: "Оптимизировать код на Vue.js",
-        status: "basket",
-    },
-    {
-        id: "10",
-        title: "Удалить ненужные файлы",
-        status: "basket",
-    },
-    {
-        id: "11",
-        title: "Очистить базу данных",
-        status: "basket",
-    },
-    {
-        id: "12",
-        title: "Изучить архитектуру .NET Core",
-        status: "basket",
-    }
+//    {
+   //     id: "9",
+   //     title: "Оптимизировать код на Vue.js",
+     //   status: "basket",
+  //  },
+  //  {
+     //   id: "10",
+      //  title: "Удалить ненужные файлы",
+      //  status: "basket",
+  //  },
+   // {
+     //   id: "11",
+    //    title: "Очистить базу данных",
+      //  status: "basket",
+   // },
+   // {
+      //  id: "12",
+      //  title: "Изучить архитектуру .NET Core",
+      //  status: "basket",
+   // }
 ];
