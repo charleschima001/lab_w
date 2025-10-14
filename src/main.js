@@ -1,3 +1,4 @@
+
 import HeaderComponent from './view/header-component.js';
 import FormAddTaskComponent from './view/form-add-task-component.js';
 import TasksBoardPresenter from './presenter/tasks-board-presenter.js';
@@ -10,6 +11,12 @@ const tasksBoardPresenter = new TasksBoardPresenter({
     tasksModel,
 });
 
+function handleNewTaskButtonClick() {
+    tasksBoardPresenter.createTask();
+}
+
 render(new HeaderComponent(), document.querySelector('.header-container'));
-render(new FormAddTaskComponent(), document.querySelector('.form-container'));
+render(new FormAddTaskComponent({
+    onClick: handleNewTaskButtonClick
+}), document.querySelector('.form-container'));
 tasksBoardPresenter.init();

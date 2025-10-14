@@ -8,7 +8,6 @@ function createTaskComponentTemplate(task) {
         </div>
     `;
 }
-
 export default class TaskComponent extends AbstractComponent {
     #task = null;
 
@@ -21,3 +20,4 @@ export default class TaskComponent extends AbstractComponent {
         return createTaskComponentTemplate(this.#task);
     }
 }
+

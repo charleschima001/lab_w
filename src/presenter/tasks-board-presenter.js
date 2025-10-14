@@ -1,3 +1,4 @@
+
 import TaskListComponent from '../view/task-list-component.js';
 import TaskComponent from '../view/task-component.js';
 import TaskBoardComponent from '../view/task-board-component.js';
@@ -16,6 +17,9 @@ export default class TasksBoardPresenter {
         this.#boardContainer = boardContainer;
         this.#tasksModel = tasksModel;
         this.#tasksBoardComponent = new TaskBoardComponent();
+        
+       
+        this.#tasksModel.addObserver(this.#handleModelChange.bind(this));
     }
 
     init() {
@@ -24,7 +28,17 @@ export default class TasksBoardPresenter {
     }
 
     #renderBoard() {
-        render(this.#tasksBoardComponent, this.#boardContainer);
+       
+        if (!this.#boardContainer.contains(this.#tasksBoardComponent.element)) {
+            render(this.#tasksBoardComponent, this.#boardContainer);
+        }
+        
+        this.#renderColumns();
+    }
+
+    #renderColumns() {
+        const columnsContainer = this.#tasksBoardComponent.getColumnsContainer();
+        columnsContainer.innerHTML = ''; 
         
         const statuses = [Status.BACKLOG, Status.PROCESSING, Status.DONE, Status.BASKET];
         
@@ -50,7 +64,6 @@ export default class TasksBoardPresenter {
             });
         }
 
-        
         if (status === Status.BASKET) {
             this.#renderClearButton(taskListComponent.element);
         }
@@ -62,12 +75,52 @@ export default class TasksBoardPresenter {
     }
 
     #renderClearButton(container) {
-        const clearBasketButton = new ClearBasketButtonComponent();
+        const clearBasketButton = new ClearBasketButtonComponent({
+            onClick: this.#handleClearBasket.bind(this)
+        });
         render(clearBasketButton, container);
     }
 
     #renderEmptyListStub(container) {
         const emptyStubComponent = new EmptyListStubComponent();
         render(emptyStubComponent, container);
+    }
+
+    #clearBoard() {
+        
+        const columnsContainer = this.#tasksBoardComponent.getColumnsContainer();
+        if (columnsContainer) {
+            columnsContainer.innerHTML = '';
+        }
+    }
+
+    #handleModelChange() {
+        this.#clearBoard();
+        this.#renderColumns(); 
+
+    #handleClearBasket() {
+        this.#tasksModel.clearBasket();
+    }
+
+    // Add task creation method
+    createTask() {
+        const taskInput = document.querySelector('#add-task');
+        if (!taskInput) {
+            console.error('Task input not found');
+            return;
+        }
+        
+        const taskTitle = taskInput.value.trim();
+        if (!taskTitle) {
+            return;
+        }
+
+        this.#tasksModel.addTask(taskTitle);
+        taskInput.value = '';
+    }
+
+    // Getter for tasks
+    get tasks() {
+        return this.#tasksModel.tasks;
     }
 }
