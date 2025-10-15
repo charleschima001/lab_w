@@ -1,4 +1,3 @@
-
 import TaskListComponent from '../view/task-list-component.js';
 import TaskComponent from '../view/task-component.js';
 import TaskBoardComponent from '../view/task-board-component.js';
@@ -18,7 +17,6 @@ export default class TasksBoardPresenter {
         this.#tasksModel = tasksModel;
         this.#tasksBoardComponent = new TaskBoardComponent();
         
-       
         this.#tasksModel.addObserver(this.#handleModelChange.bind(this));
     }
 
@@ -28,7 +26,7 @@ export default class TasksBoardPresenter {
     }
 
     #renderBoard() {
-       
+        
         if (!this.#boardContainer.contains(this.#tasksBoardComponent.element)) {
             render(this.#tasksBoardComponent, this.#boardContainer);
         }
@@ -96,13 +94,14 @@ export default class TasksBoardPresenter {
 
     #handleModelChange() {
         this.#clearBoard();
-        this.#renderColumns(); 
+        this.#renderColumns();
+    } 
 
     #handleClearBasket() {
         this.#tasksModel.clearBasket();
     }
 
-    // Add task creation method
+    
     createTask() {
         const taskInput = document.querySelector('#add-task');
         if (!taskInput) {
@@ -119,7 +118,7 @@ export default class TasksBoardPresenter {
         taskInput.value = '';
     }
 
-    // Getter for tasks
+    
     get tasks() {
         return this.#tasksModel.tasks;
     }
