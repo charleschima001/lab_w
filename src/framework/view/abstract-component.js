@@ -1,4 +1,4 @@
-import { createElement } from "../render.js"; // This import should work now
+import { createElement } from "../render.js"; 
 
 export class AbstractComponent {
     #element = null;

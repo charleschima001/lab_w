@@ -145,7 +145,6 @@ header h1 {
     width: 100%;
 }
 
-
 .task--backlog { border-left: 4px solid #e6e9ee; }
 .task--processing { border-left: 4px solid #1976d2; }
 .task--done { border-left: 4px solid #4caf50; }
@@ -168,7 +167,6 @@ header h1 {
     background: #d32f2f;
 }
 
-
 .processing .column-header {
     background: #1976d2;
     color: white;
@@ -182,4 +180,67 @@ header h1 {
 .basket .column-header {
     background: #f44336;
     color: white;
+}
+
+.task[draggable="true"] {
+    cursor: grab;
+    user-select: none;
+    transition: all 0.2s ease;
+}
+
+.task.dragging {
+    opacity: 0.6;
+    cursor: grabbing;
+    transform: rotate(5deg);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.task-list.drag-over {
+    background-color: #f0f8ff;
+    border: 2px dashed #1976d2;
+    border-radius: 6px;
+    min-height: 100px;
+    transition: all 0.2s ease;
+}
+
+.backlog .task-list.drag-over {
+    background-color: #f8f9fa;
+    border-color: #6c757d;
+}
+
+.processing .task-list.drag-over {
+    background-color: #e3f2fd;
+    border-color: #1976d2;
+}
+
+.done .task-list.drag-over {
+    background-color: #e8f5e8;
+    border-color: #4caf50;
+}
+
+.basket .task-list.drag-over {
+    background-color: #ffebee;
+    border-color: #f44336;
+}
+
+.task-list:empty.drag-over::after {
+    content: "Drop here";
+    display: block;
+    text-align: center;
+    color: #666;
+    padding: 20px;
+    font-style: italic;
+}
+
+.task:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+}
+
+.task[draggable="true"] {
+    -webkit-user-drag: element;
+}
+
+.task, .task-list, .column {
+    transition: all 0.3s ease;
 }

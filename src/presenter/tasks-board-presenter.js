@@ -1,4 +1,3 @@
-
 import TaskListComponent from '../view/task-list-component.js';
 import TaskComponent from '../view/task-component.js';
 import TaskBoardComponent from '../view/task-board-component.js';
@@ -11,28 +10,23 @@ export default class TasksBoardPresenter {
     #boardContainer = null;
     #tasksModel = null;
     #tasksBoardComponent = null;
-    #boardTasks = [];
 
     constructor({ boardContainer, tasksModel }) {
         this.#boardContainer = boardContainer;
         this.#tasksModel = tasksModel;
         this.#tasksBoardComponent = new TaskBoardComponent();
         
-       
         this.#tasksModel.addObserver(this.#handleModelChange.bind(this));
     }
 
     init() {
-        this.#boardTasks = [...this.#tasksModel.tasks];
         this.#renderBoard();
     }
 
     #renderBoard() {
-       
-        if (!this.#boardContainer.contains(this.#tasksBoardComponent.element)) {
-            render(this.#tasksBoardComponent, this.#boardContainer);
-        }
+        this.#boardContainer.innerHTML = '';
         
+        render(this.#tasksBoardComponent, this.#boardContainer);
         this.#renderColumns();
     }
 
@@ -51,7 +45,8 @@ export default class TasksBoardPresenter {
         const tasksForStatus = this.#tasksModel.getTasksByStatus(status);
         const taskListComponent = new TaskListComponent({
             status: status,
-            label: StatusLabel[status]
+            label: StatusLabel[status],
+            onTaskDrop: this.#handleTaskDrop.bind(this)
         });
         
         render(taskListComponent, this.#tasksBoardComponent.getColumnsContainer());
@@ -70,7 +65,7 @@ export default class TasksBoardPresenter {
     }
 
     #renderTask(task, container) {
-        const taskComponent = new TaskComponent(task); 
+        const taskComponent = new TaskComponent(task);
         render(taskComponent, container);
     }
 
@@ -78,7 +73,7 @@ export default class TasksBoardPresenter {
         const clearBasketButton = new ClearBasketButtonComponent({
             onClick: this.#handleClearBasket.bind(this)
         });
-        render(clearBasketButton, container);
+        render(clearBasketButton, container, 'beforeend');
     }
 
     #renderEmptyListStub(container) {
@@ -86,23 +81,20 @@ export default class TasksBoardPresenter {
         render(emptyStubComponent, container);
     }
 
-    #clearBoard() {
-        
-        const columnsContainer = this.#tasksBoardComponent.getColumnsContainer();
-        if (columnsContainer) {
-            columnsContainer.innerHTML = '';
-        }
-    }
-
     #handleModelChange() {
-        this.#clearBoard();
-        this.#renderColumns(); 
+        console.log('Model changed - re-rendering board');
+        this.#renderColumns();
+    }
 
     #handleClearBasket() {
         this.#tasksModel.clearBasket();
     }
 
-    // Add task creation method
+    #handleTaskDrop(taskId, newStatus) {
+        console.log('Drop handled - Task:', taskId, 'New Status:', newStatus);
+        this.#tasksModel.updateTaskStatus(taskId, newStatus);
+    }
+
     createTask() {
         const taskInput = document.querySelector('#add-task');
         if (!taskInput) {
@@ -117,10 +109,5 @@ export default class TasksBoardPresenter {
 
         this.#tasksModel.addTask(taskTitle);
         taskInput.value = '';
-    }
-
-    // Getter for tasks
-    get tasks() {
-        return this.#tasksModel.tasks;
     }
 }
