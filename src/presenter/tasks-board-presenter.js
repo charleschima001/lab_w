@@ -4,7 +4,7 @@ import TaskBoardComponent from '../view/task-board-component.js';
 import ClearBasketButtonComponent from '../view/clear-basket-button-component.js';
 import EmptyListStubComponent from '../view/empty-list-stub-component.js';
 import { render } from '../framework/render.js';
-import { Status, StatusLabel } from '../const.js';
+import { Status, StatusLabel, UserAction, UpdateType } from '../const.js';
 
 export default class TasksBoardPresenter {
     #boardContainer = null;
@@ -16,17 +16,24 @@ export default class TasksBoardPresenter {
         this.#tasksModel = tasksModel;
         this.#tasksBoardComponent = new TaskBoardComponent();
         
-        this.#tasksModel.addObserver(this.#handleModelChange.bind(this));
+        this.#tasksModel.addObserver(this.#handleModelEvent.bind(this));
     }
 
-    init() {
+    async init() {
+        // Wait for model to load data from API
+        await this.#tasksModel.init();
+        // Then render the board
         this.#renderBoard();
     }
 
     #renderBoard() {
+        // Clear the board first
         this.#boardContainer.innerHTML = '';
         
+        // Render the board component
         render(this.#tasksBoardComponent, this.#boardContainer);
+        
+        // Render all columns with tasks
         this.#renderColumns();
     }
 
@@ -81,24 +88,22 @@ export default class TasksBoardPresenter {
         render(emptyStubComponent, container);
     }
 
-    #handleModelChange() {
-        console.log('Model changed - re-rendering board');
+    #handleModelEvent(event, payload) {
+        // Re-render columns when model changes
         this.#renderColumns();
     }
 
-    #handleClearBasket() {
-        this.#tasksModel.clearBasket();
+    async #handleClearBasket() {
+        await this.#tasksModel.clearBasket();
     }
 
-    #handleTaskDrop(taskId, newStatus) {
-        console.log('Drop handled - Task:', taskId, 'New Status:', newStatus);
-        this.#tasksModel.updateTaskStatus(taskId, newStatus);
+    async #handleTaskDrop(taskId, newStatus) {
+        await this.#tasksModel.updateTaskStatus(taskId, newStatus);
     }
 
-    createTask() {
+    async createTask() {
         const taskInput = document.querySelector('#add-task');
         if (!taskInput) {
-            console.error('Task input not found');
             return;
         }
         
@@ -107,7 +112,7 @@ export default class TasksBoardPresenter {
             return;
         }
 
-        this.#tasksModel.addTask(taskTitle);
+        await this.#tasksModel.addTask(taskTitle);
         taskInput.value = '';
     }
 }
