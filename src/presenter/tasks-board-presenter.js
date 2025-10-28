@@ -20,20 +20,20 @@ export default class TasksBoardPresenter {
     }
 
     async init() {
-        // Wait for model to load data from API
+        
         await this.#tasksModel.init();
-        // Then render the board
+        
         this.#renderBoard();
     }
 
     #renderBoard() {
-        // Clear the board first
+        
         this.#boardContainer.innerHTML = '';
         
-        // Render the board component
+    
         render(this.#tasksBoardComponent, this.#boardContainer);
         
-        // Render all columns with tasks
+        
         this.#renderColumns();
     }
 
@@ -89,7 +89,7 @@ export default class TasksBoardPresenter {
     }
 
     #handleModelEvent(event, payload) {
-        // Re-render columns when model changes
+        
         this.#renderColumns();
     }
 
