@@ -2,12 +2,11 @@ import HeaderComponent from './view/header-component.js';
 import FormAddTaskComponent from './view/form-add-task-component.js';
 import TasksBoardPresenter from './presenter/tasks-board-presenter.js';
 import { render } from './framework/render.js';
-import TasksModel from './model/tasks-model.js'; // Updated path
-import TasksApiService from './task-api-service.js'; // Updated path
+import TasksModel from './model/tasks-model.js';
+import TasksApiService from './task-api-service.js'; 
 
-// Get your actual URL from mockAPI and replace YOUR_ID
-const END_POINT = 'https://68fecf3fe02b16d1753b7560.mockapi.io/'; // Your actual URL
 
+const END_POINT = 'https://68fecf3fe02b16d1753b7560.mockapi.io/'; 
 const tasksApiService = new TasksApiService(END_POINT);
 const tasksModel = new TasksModel({
     tasksApiService: tasksApiService
